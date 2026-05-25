@@ -1,12 +1,19 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from .views import SurveyViewSet, OptionViewSet, VoteViewSet
+
+from .views import PublicSurveyViewSet, SurveyViewSet
+
 
 router = DefaultRouter()
-router.register(r'surveys', SurveyViewSet)
-router.register(r'options', OptionViewSet)
-router.register(r'votes', VoteViewSet)
+router.register('', SurveyViewSet, basename='survey')
+
+public_router = DefaultRouter()
+public_router.register('', PublicSurveyViewSet, basename='public-survey')
 
 urlpatterns = [
     path('', include(router.urls)),
+]
+
+public_urlpatterns = [
+    path('', include(public_router.urls)),
 ]
